@@ -5,15 +5,49 @@
     <title>Title</title>
     <script src="/static/js/common.js"></script>
     <script>
-        function testXhr() {
+        function ajax_click() {
+            //1.创建xhr
             var xhr = createXhr()
             console.log(xhr)
+
+            //2.创建请求
+            xhr.open('get', '/ajax-get', true)
+
+            //3.设置回调函数
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('id-h1').innerHTML = xhr.responseText
+                }
+            }
+
+            //4.发送请求
+            xhr.send(null)
+        }
+
+        function show_name() {
+            var xhr = createXhr()
+            var name = document.getElementById('id-name').value
+            xhr.open('get', '/ajax-show?name=' + name, true)
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('id-show').innerHTML = xhr.responseText
+                }
+            }
+
+            xhr.send(null)
         }
     </script>
 </head>
 <body>
 
-<button onclick="testXhr()">测试</button>
+<a href="/ajax-get">普通请求</a>
+<button onclick="ajax_click()">Ajax请求</button>
+<h1 id="id-h1">这里显示请求返回数据</h1>
+
+<input id="id-name" type="text">
+<button onclick="show_name()">显示名称</button>
+<h2 id="id-show"></h2>
 
 </body>
 </html>

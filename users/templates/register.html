@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+
+            //为 #uname 绑定blur事件
+            $('#uname').blur(function () {
+                var xhr = createXhr()
+
+                var url = '/user/checkuname?uname=' + this.value
+                // var url = '/user/checkuname?uname=' + $('#uname').val()
+                xhr.open('get', url, true)
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.status === 200 && xhr.readyState === 4) {
+                        $('#id-span').html(xhr.responseText)
+                    }
+                }
+
+                xhr.send(null)
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+<div>
+    uname:<input type="text" id="uname"><span id="id-span"></span>
+</div>
+<div>
+    upwd:<input type="text" id="upwd">
+</div>
+<div>
+    nickname:<input type="text" id="nickname">
+</div>
+
+<div>
+    <button id="register_btn">注册</button>
+</div>
+
+
+</body>
+</html>
