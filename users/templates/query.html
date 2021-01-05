@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询</title>
+    <script src='/static/js/common.js'></script>
+    <script src='/static/js/jquery-1.11.3.js'></script>
+    <script>
+        $(function () {
+            $('#show').click(function () {
+                var xhr = createXhr()
+                xhr.open('get', '/user/query_server', true)
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.status === 200 && xhr.readyState === 4) {
+                        var msg = xhr.responseText
+                        var users = msg.split('|')
+                        var html = ''
+                        for (var i = 0; i < users.length; i++) {
+                            html += '<tr>'
+
+                            var info = users[i].split('_')
+                            html += '<td>' + info[0] + '</td>'
+                            html += '<td>' + info[1] + '</td>'
+                            html += '<td>' + info[2] + '</td>'
+                            html += '<td>' + info[3] + '</td>'
+
+                            html += '</tr>'
+                        }
+
+                        $('#content').html(html)
+                    }
+                }
+
+                xhr.send(null)
+            })
+        })
+    </script>
+</head>
+<body>
+
+<button id="show">查询</button>
+<table style="width: 400px;border: solid 1px">
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>昵称</th>
+    </tr>
+    <tbody id="content">
+    </tbody>
+</table>
+</body>
+</html>

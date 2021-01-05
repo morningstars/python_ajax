@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from . import models
 
 
+
 # Create your views here.
 
 def register(request):
@@ -50,3 +51,57 @@ def checkuname(request):
     if users:
         return HttpResponse('1')
     return HttpResponse('0')
+
+
+def query_users(request):
+    return render(request, 'query.html')
+
+
+def query_server(request):
+    users = models.User.objects.all()
+    msg = ''
+    for u in users:
+        msg += '%s_%s_%s_%s|' % (u.id, u.uname, u.upwd, u.nickname)
+    msg = msg[0:-1]
+    return HttpResponse(msg)
+
+
+def jso(request):
+    return render(request, 'jso.html')
+
+
+def json_views(request):
+    return render(request, 'json.html')
+
+
+def json_server(request):
+    dict = {
+        'uname': 'zhangsan',
+        'uage': 30,
+        'ugender': 'MALE'
+    }
+
+    import json
+
+    # 使用python的json模块中的dumps()方法转成json字符串
+    jsonstr = json.dumps(dict)
+
+    users = [
+        {
+            'uname': 'zhangsan',
+            'uage': 30
+        }, {
+            'uname': '张三',
+            'uage': 30
+        }
+    ]
+    jsonarr = json.dumps(users)
+
+
+    # 使用django的serializers
+    from django.core import serializers
+
+    users = models.User.objects.all()
+    str = serializers.serialize('json', users)
+
+    return HttpResponse(str)

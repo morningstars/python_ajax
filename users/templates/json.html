@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+</head>
+<body>
+<script>
+    // 模拟一个json字符串  外面用单引号 里面用双引号
+    var jsonStr = '{"uname": "wang", "uage": 30}'
+
+    //通过JSON.parse() 将jsonStr 转换为JS对象
+    var obj = JSON.parse(jsonStr)
+    console.log('姓名：' + obj.uname)
+    console.log('年龄：' + obj.uage)
+
+
+    var jsonStr2 = '[{"uname": "wang1", "uage": 30},' +
+        '{"uname": "wang2", "uage": 40},' +
+        '{"uname": "wang3", "uage": 50},' +
+        '{"uname": "wang4", "uage": 60}]'
+
+    var obj2 = JSON.parse(jsonStr2)
+    for(var i=0; i<obj2.length; i++){
+        console.log('姓名：' + obj2[i].uname)
+        console.log('年龄：' + obj2[i].uage)
+    }
+
+    console.log('使用jq循环遍历')
+    $(obj2).each(function (i, object){
+        console.log('uname:', object.uname)
+        console.log('uage:', object.uage)
+    })
+
+
+</script>
+</body>
+</html>
