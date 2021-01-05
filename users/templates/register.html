@@ -11,29 +11,92 @@
     <script src="/static/js/common.js"></script>
     <script src="/static/js/jquery-1.11.3.js"></script>
     <script>
-        $(function () {
 
+        /**
+         *  验证用户名称是否存在的函数
+         *  return： true表示用户名称已存在  false表示用户名称不存在
+         */
+        function checkuname() {
+            var res = false
+            var xhr = createXhr()
+            var url = '/user/checkuname?uname=' + $('#uname').val()
+
+            // 同步请求
+            xhr.open('get', url, false)
+
+            xhr.onreadystatechange = function () {
+                if (xhr.status === 200 && xhr.readyState === 4) {
+                    if(xhr.responseText === '1'){
+                        $('#id-span').html('用户名称已存在')
+                        res = true
+                    }else {
+                        $('#id-span').html('通过')
+                    }
+                }
+            }
+            xhr.send(null)
+            return res
+        }
+
+        $(function () {
             //为 #uname 绑定blur事件
             $('#uname').blur(function () {
+                checkuname()
+            })
+
+            // get方式发送请求
+            {#$('#register_btn').click(function () {#}
+            {#    var xhr = createXhr()#}
+            {##}
+            {#    var uname = $('#uname').val()#}
+            {#    var upwd = $('#upwd').val()#}
+            {#    var nickname = $('#nickname').val()#}
+            {#    var url = '/user/regUser?uname=' + uname + '&upwd=' + upwd + '&nickname=' + nickname#}
+            {##}
+            {#    xhr.open('get', url, true)#}
+            {##}
+            {#    xhr.onreadystatechange = function () {#}
+            {#        if (xhr.readyState === 4 && xhr.status === 200){#}
+            {#            alert(xhr.responseText)#}
+            {#        }#}
+            {#    }#}
+            {##}
+            {#    xhr.send(null)#}
+            {# })#}
+
+            // post方式发送请求
+            $('#register_btn').click(function () {
+
+                if (checkuname()) {
+                    alert('用户名称已存在')
+                    return
+                }
+
                 var xhr = createXhr()
 
-                var url = '/user/checkuname?uname=' + this.value
-                // var url = '/user/checkuname?uname=' + $('#uname').val()
-                xhr.open('get', url, true)
+                xhr.open('post', '/user/regUser', true)
 
                 xhr.onreadystatechange = function () {
-                    if (xhr.status === 200 && xhr.readyState === 4) {
-                        $('#id-span').html(xhr.responseText)
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert(xhr.responseText)
                     }
                 }
 
-                xhr.send(null)
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+                var uname = $('#uname').val()
+                var upwd = $('#upwd').val()
+                var nickname = $('#nickname').val()
+                var csrf = $('[name="csrfmiddlewaretoken"]').val()
+                var parms = "uname=" + uname + '&upwd=' + upwd + '&nickname=' + nickname + '&csrfmiddlewaretoken=' + csrf
+                xhr.send(parms)
             })
         })
 
     </script>
 </head>
 <body>
+
+{% csrf_token %}
 
 <div>
     uname:<input type="text" id="uname"><span id="id-span"></span>
