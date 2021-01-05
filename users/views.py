@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models
-
+from django.core import serializers
 
 
 # Create your views here.
@@ -59,11 +59,15 @@ def query_users(request):
 
 def query_server(request):
     users = models.User.objects.all()
-    msg = ''
-    for u in users:
-        msg += '%s_%s_%s_%s|' % (u.id, u.uname, u.upwd, u.nickname)
-    msg = msg[0:-1]
-    return HttpResponse(msg)
+
+    str = serializers.serialize('json', users)
+
+
+    # msg = ''
+    # for u in users:
+    #     msg += '%s_%s_%s_%s|' % (u.id, u.uname, u.upwd, u.nickname)
+    # msg = msg[0:-1]
+    return HttpResponse(str)
 
 
 def jso(request):

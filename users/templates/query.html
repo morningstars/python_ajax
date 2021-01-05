@@ -13,22 +13,38 @@
 
                 xhr.onreadystatechange = function () {
                     if (xhr.status === 200 && xhr.readyState === 4) {
-                        var msg = xhr.responseText
-                        var users = msg.split('|')
+                        {# 将json字符串转换成json对象 #}
+                        var arr = JSON.parse(xhr.responseText)
                         var html = ''
-                        for (var i = 0; i < users.length; i++) {
+                        for (var i = 0; i < arr.length; i++) {
+                            console.log(arr[i])
                             html += '<tr>'
 
-                            var info = users[i].split('_')
-                            html += '<td>' + info[0] + '</td>'
-                            html += '<td>' + info[1] + '</td>'
-                            html += '<td>' + info[2] + '</td>'
-                            html += '<td>' + info[3] + '</td>'
+                            html += '<td>' + arr[i].pk + '</td>'
+                            html += '<td>' + arr[i].fields.uname + '</td>'
+                            html += '<td>' + arr[i].fields.upwd + '</td>'
+                            html += '<td>' + arr[i].fields.nickname + '</td>'
 
                             html += '</tr>'
                         }
-
                         $('#content').html(html)
+
+
+                        {#var users = msg.split('|')#}
+                        {#var html = ''#}
+                        {#for (var i = 0; i < users.length; i++) {#}
+                        {#    html += '<tr>'#}
+                        {##}
+                        {#    var info = users[i].split('_')#}
+                        {#    html += '<td>' + info[0] + '</td>'#}
+                        {#    html += '<td>' + info[1] + '</td>'#}
+                        {#    html += '<td>' + info[2] + '</td>'#}
+                        {#    html += '<td>' + info[3] + '</td>'#}
+                        {##}
+                        {#    html += '</tr>'#}
+                        {# }#}
+                        {##}
+                        {#$('#content').html(html)#}
                     }
                 }
 
