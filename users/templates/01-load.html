@@ -39,6 +39,21 @@
 
                 // $.post()
                 //  通过post方式
+                //  $.post(url, data, callback, type)
+
+
+                // $.ajax()
+                // 作用：自定义所有的ajax操作
+                // 语法：
+                // $.ajax({AJAX的参数对象})
+                // AJAX的参数对象：
+                //  1.url
+                //  2.data:请求到服务器的参数   字符串 or JS对象
+                //  3.type: 'get' or 'post'
+                //  4.dataType: 服务器端响应回来的数据格式 html, text, script, json
+                //  5.async: 是否采用异步  true：异步  false：同步  不写则默认异步
+                //  6.success: 响应成功之后的回调函数
+                //  7.error:请求或响应失败时的回调函数
             })
 
         })

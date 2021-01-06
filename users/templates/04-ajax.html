@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+            $('#btnAjax').click(function () {
+                $.ajax({
+                    url: '/user/04-server/',
+                    {#data: '',#}
+                    type: 'get',
+                    dataType: 'json',
+                    async: true,
+                    success: function (data) {
+                        $(data).each(function (i, obj) {
+                            console.log("课程名称：" + obj.cname)
+                            console.log("授课老师：" + obj.teacher)
+                        })
+                    },
+                    error: function () {
+                        alert('操作有误，请联系管理员...')
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<button id="btnAjax">jq-ajax</button>
+</body>
+</html>

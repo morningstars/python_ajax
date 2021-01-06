@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function (){
+            $('#btnGet').click(function () {
+                $.get('/user/02-server', function (data) {
+                    // data表示响应回来的数据
+                    $('#show').html("姓名：" + data.uname + "年龄：" + data.uage)
+                }, 'json')
+            })
+        })
+    </script>
+</head>
+<body>
+
+<button id="btnGet">jq-ajax-get</button>
+<div id="show">
+
+</div>
+</body>
+</html>

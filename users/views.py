@@ -4,6 +4,7 @@ from . import models
 from django.core import serializers
 import json
 
+
 # Create your views here.
 
 def register(request):
@@ -116,6 +117,7 @@ def front_json(request):
 def front_server(request):
     params = request.GET.get('params', '')
     print(params)
+    # json.loads() 将json字符串转换成json对象
     dict = json.loads(params)
     print(dict)
     msg = '姓名：%s, 年龄：%s，性别：%s' % (dict['uname'], dict['uage'], dict['ugender'])
@@ -124,3 +126,48 @@ def front_server(request):
 
 def load_views(request):
     return render(request, '01-load.html')
+
+
+def get_views(request):
+    return render(request, '02-get.html')
+
+
+def server02(request):
+    dict = {
+        'uname': 'zhangsan',
+        'uage': 18
+    }
+    jsonstr = json.dumps(dict)
+    return HttpResponse(jsonstr)
+
+
+def post_views(request):
+    return render(request, '03-post.html')
+
+
+def server03(request):
+    uname = request.POST.get('uname', '')
+    uage = request.POST.get('uage', '')
+    ugender = request.POST.get('ugender', '')
+    str = "姓名：" + uname + "年龄：" + uage + "性别：" + ugender
+    return HttpResponse(str)
+
+
+def ajax_views(request):
+    return render(request, '04-ajax.html')
+
+
+def server04(request):
+    list = [
+        {
+            'cname': 'Python基础',
+            'teacher': 'QTX'
+        },
+        {
+            'cname': 'web基础',
+            'teacher': 'ZHMM'
+        }
+    ]
+    # json.dumps()方法 将js对象转换成json字符串
+
+    return HttpResponse(json.dumps(list))
