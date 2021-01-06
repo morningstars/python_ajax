@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models
 from django.core import serializers
-
+import json
 
 # Create your views here.
 
@@ -62,7 +62,6 @@ def query_server(request):
 
     str = serializers.serialize('json', users)
 
-
     # msg = ''
     # for u in users:
     #     msg += '%s_%s_%s_%s|' % (u.id, u.uname, u.upwd, u.nickname)
@@ -101,7 +100,6 @@ def json_server(request):
     ]
     jsonarr = json.dumps(users)
 
-
     # 使用django的serializers
     from django.core import serializers
 
@@ -109,3 +107,20 @@ def json_server(request):
     str = serializers.serialize('json', users)
 
     return HttpResponse(str)
+
+
+def front_json(request):
+    return render(request, 'front_json.html')
+
+
+def front_server(request):
+    params = request.GET.get('params', '')
+    print(params)
+    dict = json.loads(params)
+    print(dict)
+    msg = '姓名：%s, 年龄：%s，性别：%s' % (dict['uname'], dict['uage'], dict['ugender'])
+    return HttpResponse(msg)
+
+
+def load_views(request):
+    return render(request, '01-load.html')

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+
+            $('#btnload').click(function () {
+
+                var params = {
+                    uname: 'name',
+                    uage: 10,
+                    ugender: 'ugender',
+                    csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+                }
+
+                // $obj.load(url, data, callback)函数
+                // 无参或字符串传参  为 get请求
+                // js对象传参   为   post请求
+                $('#baidu').load('/user/query_users/',
+                    params,
+                    function () {
+                        window.setTimeout(function () {
+                            $('#baidu').hide(3000)
+                        }, 5000)
+                    }
+                )
+
+                // $.get()
+                //  通过get方式异步向远程发送请求
+                //  $.get(url, data, callback, type)
+                //  url:    请求地址
+                //  data:   参数
+                //  callback:   响应成功后的回调函数
+                //  type:   响应回来的数据格式
+                //      取值：1.html  2.text  3.script  4.json
+
+                // $.post()
+                //  通过post方式
+            })
+
+        })
+    </script>
+</head>
+<body>
+{% csrf_token %}
+<button id="btnload">加载百度</button>
+<div id="baidu"></div>
+
+</body>
+</html>

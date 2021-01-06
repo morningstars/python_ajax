@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+            $('#id-btn').click(function () {
+                var xhr = createXhr()
+                var parms = {
+                    uname: 'zhangsan',
+                    uage: 30,
+                    ugender: 'male'
+                }
+                parms = JSON.stringify(parms)
+
+                xhr.open('get', '/user/front_server?params=' + parms, true)
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert(xhr.responseText)
+                    }
+                }
+
+                xhr.send(null)
+            })
+
+        })
+    </script>
+</head>
+<body>
+<button id="id-btn">发送json数据</button>
+</body>
+</html>

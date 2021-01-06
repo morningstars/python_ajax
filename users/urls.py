@@ -10,4 +10,11 @@ urlpatterns = [
     url(r'^jso$', views.jso),
     url(r'^json/$', views.json_views),
     url(r'^json_server/$', views.json_server),
+    url(r'^front_json/$', views.front_json),
+    url(r'^front_server/$', views.front_server),
+
+
+
+
+    url(r'^01-load/$', views.load_views),
 ]
